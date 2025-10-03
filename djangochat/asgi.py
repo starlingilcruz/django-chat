@@ -16,7 +16,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangochat.settings.dev")
 django_asgi_app = get_asgi_application()
 
 # Import routing after Django is initialized
-from messaging.routing import websocket_urlpatterns  # noqa: E402
+from messaging.routing import websocket_urlpatterns
 
 application = ProtocolTypeRouter(
     {

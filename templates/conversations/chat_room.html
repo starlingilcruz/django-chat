@@ -168,7 +168,7 @@
         e.preventDefault();
         const userId = document.getElementById('userId').value;
 
-        fetch(`/api/v1/conversations/${conversationId}/add_participant`, {
+        fetch(`/api/v1/conversations/${conversationId}/add_participant/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
