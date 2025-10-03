@@ -1,0 +1,82 @@
+[project]
+name = "django-chat"
+version = "0.1.0"
+description = "Real-time chat application with Django, Channels, and Redis"
+requires-python = ">=3.9"
+dependencies = [
+    "django>=4.2,<5.0",
+    "djangorestframework>=3.14.0",
+    "channels>=4.0.0",
+    "channels-redis>=4.1.0",
+    "redis>=5.0.0",
+    "psycopg[binary]>=3.1.0",
+    "daphne>=4.0.0",
+    "python-dotenv>=1.0.0",
+    "djangorestframework-simplejwt>=5.3.0",
+    "whitenoise>=6.6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-django>=4.5.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.5.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | migrations
+  | __pycache__
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_glob = ["*/migrations/*", "*/__pycache__/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+exclude = [
+    ".git",
+    ".venv",
+    "migrations",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "djangochat.settings.test"
+python_files = ["test_*.py", "*_test.py"]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "--cov=. --cov-report=term-missing --cov-report=html"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
