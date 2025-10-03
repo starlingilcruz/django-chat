@@ -80,3 +80,7 @@ addopts = "--cov=. --cov-report=term-missing --cov-report=html"
 [build-system]
 requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["accounts*", "common*", "conversations*", "djangochat*", "messaging*"]
+exclude = ["tests*", "docker*", "templates*", "staticfiles*"]
