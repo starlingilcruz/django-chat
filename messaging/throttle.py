@@ -1,6 +1,3 @@
-"""
-Rate throttling for messages
-"""
 
 import logging
 

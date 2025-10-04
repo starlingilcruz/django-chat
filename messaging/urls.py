@@ -1,6 +1,3 @@
-"""
-URL patterns for messaging app
-"""
 
 from django.urls import path
 

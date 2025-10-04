@@ -1,6 +1,3 @@
-"""
-Redis Streams layer for message storage and retrieval
-"""
 
 import logging
 from datetime import datetime
@@ -34,6 +31,7 @@ class RedisStreamClient:
         self,
         conversation_id: str,
         user_id: int,
+        username: str,
         content: str,
         maxlen: int = 5000,
     ) -> str:
@@ -56,6 +54,7 @@ class RedisStreamClient:
             stream_key = self._get_stream_key(conversation_id)
             message_data = {
                 "user_id": str(user_id),
+                "username": username,
                 "content": content,
                 "timestamp": datetime.utcnow().isoformat(),
             }
@@ -137,6 +136,7 @@ class RedisStreamClient:
                     {
                         "id": message_id,
                         "user_id": int(message_data.get("user_id", 0)),
+                        "username": message_data.get("username", ""),
                         "content": message_data.get("content", ""),
                         "timestamp": message_data.get("timestamp", ""),
                     }

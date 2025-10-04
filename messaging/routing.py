@@ -1,6 +1,3 @@
-"""
-WebSocket URL routing for messaging
-"""
 
 from django.urls import re_path
 

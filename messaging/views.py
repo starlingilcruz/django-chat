@@ -1,6 +1,3 @@
-"""
-REST API views for message history
-"""
 
 import logging
 

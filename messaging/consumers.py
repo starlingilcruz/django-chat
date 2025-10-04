@@ -1,6 +1,3 @@
-"""
-WebSocket consumer for real-time chat
-"""
 
 import json
 import logging
@@ -161,6 +158,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 return redis_stream_client.add_message(
                     self.conversation_id,
                     self.user.id,
+                    self.user.username,
                     content,
                 )
 
@@ -175,7 +173,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         "id": message_id,
                         "user_id": self.user.id,
                         "user_email": self.user.email,
-                        "user_name": self.user.get_full_name(),
+                        "username": self.user.username,
                         "content": content,
                         "conversation_id": self.conversation_id,
                     },

@@ -28,7 +28,7 @@
             <p style="color: #7f8c8d; font-size: 14px;">
                 Participants:
                 {% for participant in conversation.participants.all %}
-                    {{ participant.username }}{% if not forloop.last %}, {% endif %}
+                    {{ participant.user.username }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
         </div>
@@ -119,7 +119,9 @@
         .then(data => {
             const messagesContainer = document.getElementById('messages');
             messagesContainer.innerHTML = '';
-            data.results.forEach(msg => displayMessage(msg));
+            const messages = data.messages || data.results || [];
+            console.log("messages", messages);
+            messages.forEach(msg => displayMessage(msg));
             scrollToBottom();
         })
         .catch(error => console.error('Error loading messages:', error));
@@ -133,7 +135,7 @@
 
         messageDiv.className = `message ${isOwn ? 'message-own' : 'message-other'}`;
         messageDiv.innerHTML = `
-            ${!isOwn ? `<div class="message-sender">${message.user_name}</div>` : ''}
+            ${!isOwn ? `<div class="message-sender">${message.username}</div>` : ''}
             <div class="message-content">${escapeHtml(message.content)}</div>
         `;
 
