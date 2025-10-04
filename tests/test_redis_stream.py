@@ -10,7 +10,10 @@ from messaging.redis_stream import RedisStreamClient, RedisStreamError
 @pytest.fixture
 def redis_client():
     """Fixture for RedisStreamClient"""
-    return RedisStreamClient()
+    client = RedisStreamClient()
+    client.redis_client.flushdb()
+    yield client
+    client.redis_client.flushdb()
 
 
 @pytest.fixture

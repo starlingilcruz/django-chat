@@ -3,12 +3,23 @@ Tests for message throttling
 """
 
 import pytest
+import redis
+from django.conf import settings
 
 from messaging.throttle import MessageThrottler
 
 
 @pytest.fixture
-def throttler():
+def redis_client():
+    """Fixture for Redis client"""
+    client = redis.from_url(settings.REDIS_URL, decode_responses=True)
+    client.flushdb()
+    yield client
+    client.flushdb()
+
+
+@pytest.fixture
+def throttler(redis_client):
     """Fixture for MessageThrottler with low limits for testing"""
     return MessageThrottler(max_messages=3, window_seconds=60)
 

@@ -104,4 +104,4 @@ class TestConversations:
 
         response = self.client.get(f"/api/v1/conversations/{conversation.id}/")
 
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_404_NOT_FOUND
