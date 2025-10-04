@@ -46,9 +46,7 @@ def health_check(request):
         logger.error("Redis health check failed", extra={"error": str(e)})
         overall_healthy = False
 
-    response_status = (
-        status.HTTP_200_OK if overall_healthy else status.HTTP_503_SERVICE_UNAVAILABLE
-    )
+    response_status = status.HTTP_200_OK if overall_healthy else status.HTTP_503_SERVICE_UNAVAILABLE
 
     return JsonResponse(
         {

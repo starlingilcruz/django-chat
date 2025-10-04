@@ -4,12 +4,11 @@ WebSocket consumer for real-time chat
 
 import json
 import logging
-from typing import Dict
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
 
-from conversations.models import Conversation, Participant
+from conversations.models import Participant
 
 from .redis_stream import RedisStreamError, redis_stream_client
 from .throttle import message_throttler
@@ -129,7 +128,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
             await self.send_error("INTERNAL_ERROR", "An error occurred")
 
-    async def handle_message_send(self, data: Dict):
+    async def handle_message_send(self, data: dict):
         """Handle message send request"""
         content = data.get("content", "").strip()
 

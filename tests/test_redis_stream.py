@@ -4,7 +4,7 @@ Tests for Redis Streams messaging
 
 import pytest
 
-from messaging.redis_stream import RedisStreamClient, RedisStreamError
+from messaging.redis_stream import RedisStreamClient
 
 
 @pytest.fixture

@@ -2,10 +2,9 @@
 Redis Streams layer for message storage and retrieval
 """
 
-import json
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import redis
 from django.conf import settings
@@ -95,7 +94,7 @@ class RedisStreamClient:
         conversation_id: str,
         from_id: str = "-",
         limit: int = 50,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Retrieve messages from a conversation stream
 
@@ -177,7 +176,7 @@ class RedisStreamClient:
             logger.error("Redis ping failed", extra={"error": str(e)})
             return False
 
-    def get_stream_info(self, conversation_id: str) -> Optional[Dict[str, Any]]:
+    def get_stream_info(self, conversation_id: str) -> Optional[dict[str, Any]]:
         """
         Get information about a conversation stream
 

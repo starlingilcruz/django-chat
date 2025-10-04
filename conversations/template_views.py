@@ -16,12 +16,8 @@ class ConversationListTemplateView(LoginRequiredMixin, View):
     login_url = "/login"
 
     def get(self, request):
-        conversations = Conversation.objects.filter(
-            participants__user=request.user
-        ).distinct()
-        return render(
-            request, "conversations/list.html", {"conversations": conversations}
-        )
+        conversations = Conversation.objects.filter(participants__user=request.user).distinct()
+        return render(request, "conversations/list.html", {"conversations": conversations})
 
 
 class CreateConversationTemplateView(LoginRequiredMixin, View):

@@ -18,6 +18,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.MD5PasswordHasher",
 ]
 
+
 # Disable migrations for faster tests
 class DisableMigrations:
     def __contains__(self, item):

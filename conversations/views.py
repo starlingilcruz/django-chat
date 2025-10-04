@@ -32,9 +32,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
         """
         Filter conversations where user is a participant
         """
-        return Conversation.objects.filter(
-            participants__user=self.request.user
-        ).distinct()
+        return Conversation.objects.filter(participants__user=self.request.user).distinct()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

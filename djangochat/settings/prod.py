@@ -18,6 +18,4 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 # WebSocket allowed origins (configure based on your domain)
-ALLOWED_WEBSOCKET_ORIGINS = os.getenv(  # noqa: F405
-    "ALLOWED_WEBSOCKET_ORIGINS", ""
-).split(",")
+ALLOWED_WEBSOCKET_ORIGINS = os.getenv("ALLOWED_WEBSOCKET_ORIGINS", "").split(",")  # noqa: F405
