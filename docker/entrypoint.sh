@@ -2,7 +2,7 @@
 set -e
 
 echo "Waiting for PostgreSQL..."
-until pg_isready -h ${POSTGRES_HOST:-db} -p ${POSTGRES_PORT:-5432} -U ${POSTGRES_USER:-djangochat} > /dev/null 2>&1; do
+until pg_isready -h ${POSTGRES_HOST:-db} -p ${POSTGRES_PORT:-5432} -U ${POSTGRES_USER:-openchat} > /dev/null 2>&1; do
   echo "PostgreSQL is unavailable - sleeping"
   sleep 1
 done

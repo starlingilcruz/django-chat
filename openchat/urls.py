@@ -1,5 +1,5 @@
 """
-URL configuration for djangochat project
+URL configuration for openchat project
 """
 
 from django.contrib import admin

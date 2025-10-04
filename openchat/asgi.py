@@ -1,5 +1,5 @@
 """
-ASGI config for djangochat project.
+ASGI config for openchat project.
 """
 
 import os
@@ -9,7 +9,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangochat.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openchat.settings.dev")
 
 django_asgi_app = get_asgi_application()
 

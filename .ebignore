@@ -1,0 +1,41 @@
+# Git files
+.git/
+.gitignore
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Development
+.env
+staticfiles/
+
+# Documentation
+*.md
+!README.md
+
+# Docker (not needed for EB)
+docker-compose.yml
+Dockerfile
+docker/

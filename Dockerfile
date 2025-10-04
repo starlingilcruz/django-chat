@@ -52,4 +52,4 @@ RUN chmod +x /entrypoint.sh
 USER appuser
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "djangochat.asgi:application"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "openchat.asgi:application"]

@@ -1,4 +1,4 @@
-# django-chat
+# open-chat
 
 Real-time chat application built with Django, Channels, and Redis Streams.
 
@@ -30,7 +30,7 @@ Real-time chat application built with Django, Channels, and Redis Streams.
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd django-chat
+   cd open-chat
    ```
 
 2. **Copy environment file**
@@ -44,8 +44,8 @@ Real-time chat application built with Django, Channels, and Redis Streams.
    DEBUG=True
    ALLOWED_HOSTS=localhost,127.0.0.1
 
-   POSTGRES_DB=djangochat
-   POSTGRES_USER=djangochat
+   POSTGRES_DB=openchat
+   POSTGRES_USER=openchat
    POSTGRES_PASSWORD=change-me
    POSTGRES_HOST=db
    POSTGRES_PORT=5432
@@ -72,6 +72,25 @@ Real-time chat application built with Django, Channels, and Redis Streams.
    - API: http://localhost:8000
    - Admin: http://localhost:8000/admin
    - Health Check: http://localhost:8000/healthz
+   - Chat UI: http://localhost:8000/conversations/
+
+## Deployment
+
+### AWS Elastic Beanstalk (Production)
+
+This project includes automated CI/CD deployment to AWS Elastic Beanstalk.
+
+**Quick Deploy:**
+1. Set up AWS resources (RDS, ElastiCache) - see [DEPLOYMENT.md](DEPLOYMENT.md)
+2. Configure GitHub Secrets (AWS credentials, EB app/env names)
+3. Push to `master` branch → Automatic deployment!
+
+**Deployment Flow:**
+```
+Push to master → Tests run → Build → Deploy to EB → Migrations → Live!
+```
+
+For detailed instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**
 
 ## Local Development Setup
 
@@ -99,13 +118,13 @@ Real-time chat application built with Django, Channels, and Redis Streams.
 
 5. **Run migrations**
    ```bash
-   export DJANGO_SETTINGS_MODULE=djangochat.settings.dev
+   export DJANGO_SETTINGS_MODULE=openchat.settings.dev
    python manage.py migrate
    ```
 
 6. **Run development server**
    ```bash
-   daphne -b 0.0.0.0 -p 8000 djangochat.asgi:application
+   daphne -b 0.0.0.0 -p 8000 openchat.asgi:application
    ```
 
 ## API Endpoints
@@ -291,8 +310,8 @@ LOGGING = {
 ## Project Structure
 
 ```
-django-chat/
-├── djangochat/          # Project settings and config
+open-chat/
+├── openchat/            # Project settings and config
 │   ├── settings/        # Settings by environment (base, dev, prod, test)
 │   ├── asgi.py          # ASGI application
 │   └── urls.py          # Main URL routing

@@ -1,5 +1,5 @@
 """
-Django base settings for djangochat project.
+Django base settings for openchat project.
 """
 
 import os
@@ -49,7 +49,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "djangochat.urls"
+ROOT_URLCONF = "openchat.urls"
 
 TEMPLATES = [
     {
@@ -67,16 +67,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "djangochat.wsgi.application"
-ASGI_APPLICATION = "djangochat.asgi.application"
+WSGI_APPLICATION = "openchat.wsgi.application"
+ASGI_APPLICATION = "openchat.asgi.application"
 
 # Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB", "djangochat"),
-        "USER": os.getenv("POSTGRES_USER", "djangochat"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "djangochat"),
+        "NAME": os.getenv("POSTGRES_DB", "openchat"),
+        "USER": os.getenv("POSTGRES_USER", "openchat"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "openchat"),
         "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": os.getenv("POSTGRES_PORT", "5432"),
     }
