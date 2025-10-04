@@ -308,12 +308,50 @@ django-chat/
 └── pyproject.toml       # Python dependencies
 ```
 
+## Development
+
+### Pre-commit Hooks
+
+This project uses pre-commit hooks to automatically format and lint code before commits:
+
+```bash
+# Install pre-commit hooks (first time only)
+pip install pre-commit
+pre-commit install
+
+# Pre-commit will now run automatically on git commit
+# To manually run on all files:
+pre-commit run --all-files
+```
+
+The hooks will automatically:
+- Format code with **Black**
+- Sort imports with **isort**
+- Lint and fix issues with **Ruff**
+- Check for trailing whitespace, file endings, and other common issues
+
+### Manual Linting
+
+```bash
+# Run ruff
+ruff check .
+
+# Format with black
+black .
+
+# Sort imports
+isort .
+
+# Run all checks
+ruff check . && black --check . && isort --check-only .
+```
+
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run tests and linting
+4. Run tests and linting (pre-commit handles this automatically)
 5. Submit a pull request
 
 ## License

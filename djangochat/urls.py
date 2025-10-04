@@ -6,11 +6,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
 
-from accounts.template_views import (
-    LoginTemplateView,
-    LogoutTemplateView,
-    SignupTemplateView,
-)
+from accounts.template_views import LoginTemplateView, LogoutTemplateView, SignupTemplateView
 from common.views import health_check
 from conversations.template_views import (
     ChatRoomTemplateView,
