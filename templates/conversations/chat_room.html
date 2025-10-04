@@ -120,7 +120,6 @@
             const messagesContainer = document.getElementById('messages');
             messagesContainer.innerHTML = '';
             const messages = data.messages || data.results || [];
-            console.log("messages", messages);
             messages.forEach(msg => displayMessage(msg));
             scrollToBottom();
         })
