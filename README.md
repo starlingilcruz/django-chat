@@ -1,7 +1,7 @@
 # open-chat
 
-[![CI](https://github.com/YOUR_USERNAME/django-chat/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/django-chat/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/YOUR_USERNAME/django-chat/branch/master/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/django-chat)
+[![CI](https://github.com/starlingilcruz/django-chat/actions/workflows/ci.yml/badge.svg)](https://github.com/starlingilcruz/django-chat/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/starlingilcruz/django-chat/branch/master/graph/badge.svg)](https://codecov.io/gh/starlingilcruz/django-chat)
 
 Real-time chat application built with Django, Channels, and Redis Streams.
 
