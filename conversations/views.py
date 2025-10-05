@@ -88,9 +88,11 @@ class ConversationViewSet(viewsets.ModelViewSet):
             )
 
         user_id = request.data.get("user_id")
-        if not user_id:
+        email = request.data.get("email")
+
+        if not user_id and not email:
             return Response(
-                {"error": "user_id is required"},
+                {"error": "Either 'user_id' or 'email' is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -98,7 +100,12 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
         User = get_user_model()
         try:
-            user = User.objects.get(id=user_id)
+            # Look up user by ID or email
+            if user_id:
+                user = User.objects.get(id=user_id)
+            else:
+                user = User.objects.get(email=email)
+
             Participant.objects.get_or_create(
                 conversation=conversation,
                 user=user,
@@ -109,7 +116,8 @@ class ConversationViewSet(viewsets.ModelViewSet):
                 extra={
                     "user_id": request.user.id,
                     "conversation_id": str(conversation.id),
-                    "new_participant_id": user_id,
+                    "new_participant_id": user.id,
+                    "new_participant_email": user.email,
                 },
             )
             return Response({"success": True}, status=status.HTTP_200_OK)
