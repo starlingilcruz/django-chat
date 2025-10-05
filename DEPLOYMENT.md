@@ -1,11 +1,11 @@
 # AWS Elastic Beanstalk Deployment Guide
 
-This guide covers deploying the Open Chat application to AWS Elastic Beanstalk with automated CI/CD via GitHub Actions.
+This guide covers deploying the Open Chat application to AWS Elastic Beanstalk with automated CI/CD.
 
 ## Architecture
 
 ```
-GitHub → CI/CD Pipeline → AWS Elastic Beanstalk
+CI/CD Pipeline → AWS Elastic Beanstalk
                             ├─ Application Load Balancer (WebSocket support)
                             ├─ EC2 Instances (Daphne ASGI server)
                             ├─ RDS PostgreSQL
@@ -17,7 +17,7 @@ GitHub → CI/CD Pipeline → AWS Elastic Beanstalk
 - AWS Account
 - AWS CLI installed locally
 - EB CLI installed: `pip install awsebcli`
-- GitHub repository with admin access
+- Pipeline with admin access
 
 ---
 
@@ -41,18 +41,6 @@ aws rds create-db-instance \
   --publicly-accessible
 ```
 
-**Or via AWS Console:**
-1. Go to RDS → Create database
-2. Choose PostgreSQL 16
-3. Template: Free tier (or Production)
-4. DB instance identifier: `open-chat-db`
-5. Master username: `openchat`
-6. Set a secure password
-7. Instance: `db.t3.micro`
-8. Storage: 20 GB
-9. Enable automated backups
-10. Create database
-
 ### 1.2 Create ElastiCache Redis
 
 ```bash
@@ -64,14 +52,6 @@ aws elasticache create-cache-cluster \
   --num-cache-nodes 1 \
   --port 6379
 ```
-
-**Or via AWS Console:**
-1. Go to ElastiCache → Redis → Create
-2. Cluster name: `open-chat-redis`
-3. Engine: Redis 7.0
-4. Node type: `cache.t3.micro`
-5. Number of replicas: 0 (for dev) or 1-2 (for prod)
-6. Create
 
 ---
 
@@ -120,9 +100,7 @@ eb config
 
 ---
 
-## Step 3: Configure GitHub Secrets
-
-Add these secrets to your GitHub repository (Settings → Secrets and variables → Actions):
+## Step 3: Configure Secrets
 
 ### Required Secrets:
 
@@ -134,23 +112,20 @@ Add these secrets to your GitHub repository (Settings → Secrets and variables 
 | `EB_APPLICATION_NAME` | `open-chat` | From EB init |
 | `EB_ENVIRONMENT_NAME` | `open-chat-prod` | From EB create |
 
-### 3.1 Create IAM User for GitHub Actions
+### 3.1 Create IAM User for the deployment
 
 ```bash
 # Create IAM user
-aws iam create-user --user-name github-actions-deployer
+aws iam create-user --user-name cd-deployer
 
 # Attach policies
 aws iam attach-user-policy \
-  --user-name github-actions-deployer \
+  --user-name cd-deployer \
   --policy-arn arn:aws:iam::aws:policy/AdministratorAccess-AWSElasticBeanstalk
 
 # Create access key
-aws iam create-access-key --user-name github-actions-deployer
+aws iam create-access-key --user-name cd-deployer
 ```
-
-Save the `AccessKeyId` and `SecretAccessKey` - you'll need these for GitHub Secrets.
-
 ---
 
 ## Step 4: Set Environment Variables in EB
@@ -174,8 +149,6 @@ eb setenv \
 
 ## Step 5: Deploy
 
-### Manual Deployment (First Time)
-
 ```bash
 # Deploy to EB
 eb deploy
@@ -189,24 +162,6 @@ eb logs
 # Open in browser
 eb open
 ```
-
-### Automated Deployment (CI/CD)
-
-Once GitHub secrets are configured, simply push to `master`:
-
-```bash
-git add .
-git commit -m "Deploy to production"
-git push origin master
-```
-
-**What happens:**
-1. ✅ GitHub Actions runs tests
-2. ✅ If tests pass, creates deployment package
-3. ✅ Deploys to Elastic Beanstalk
-4. ✅ Runs migrations
-5. ✅ Collects static files
-6. ✅ Starts Daphne server
 
 ---
 
@@ -272,59 +227,6 @@ eb scale 2
 
 ---
 
-## Costs Estimation
-
-### Development Environment:
-- **EC2 (t3.small):** ~$15/month
-- **RDS (db.t3.micro):** ~$15/month
-- **ElastiCache (cache.t3.micro):** ~$12/month
-- **ALB:** ~$20/month
-- **Total:** ~$62/month
-
-### Production Environment:
-- **EC2 (t3.medium x 2):** ~$60/month
-- **RDS (db.t3.small):** ~$30/month
-- **ElastiCache (cache.t3.small):** ~$25/month
-- **ALB:** ~$20/month
-- **Total:** ~$135/month
-
----
-
-## Troubleshooting
-
-### Deployment Fails
-
-```bash
-# Check logs
-eb logs
-
-# Check events
-eb events
-
-# Common issues:
-# 1. Wrong environment variables
-# 2. Database connection failed
-# 3. Redis connection failed
-```
-
-### WebSocket Connection Issues
-
-1. Verify ALB is configured for WebSockets (see `.ebextensions/04_alb.config`)
-2. Check sticky sessions are enabled
-3. Verify allowed origins in production settings
-
-### Database Connection Errors
-
-```bash
-# Test database connection
-eb ssh
-source /var/app/venv/*/bin/activate
-cd /var/app/current
-python manage.py dbshell
-```
-
----
-
 ## Rolling Back
 
 ```bash
@@ -354,23 +256,9 @@ aws elasticache delete-cache-cluster --cache-cluster-id open-chat-redis
 
 ---
 
-## Security Checklist
-
-- ✅ Use strong `DJANGO_SECRET_KEY`
-- ✅ Set `DEBUG=False` in production
-- ✅ Configure `ALLOWED_HOSTS` properly
-- ✅ Use HTTPS (SSL certificate)
-- ✅ Enable RDS encryption
-- ✅ Use security groups to restrict access
-- ✅ Enable CloudWatch logging
-- ✅ Regular backups enabled
-- ✅ Use IAM roles with least privilege
-
----
-
 ## Support
 
 For issues or questions:
 - Check EB logs: `eb logs`
 - Check CloudWatch logs in AWS Console
-- Review GitHub Actions workflow logs
+- Review pipeline workflow logs
