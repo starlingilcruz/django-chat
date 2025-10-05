@@ -30,7 +30,7 @@ aws rds create-db-instance \
   --db-instance-identifier open-chat-db \
   --db-instance-class db.t3.micro \
   --engine postgres \
-  --engine-version 16.1 \
+  --engine-version 16.10 \
   --master-username openchat \
   --master-user-password YOUR_SECURE_PASSWORD \
   --allocated-storage 20 \

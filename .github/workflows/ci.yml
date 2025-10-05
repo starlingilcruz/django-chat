@@ -100,28 +100,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*' '*venv/*' '*__pycache__*' '*.pytest_cache*' '*htmlcov*' '*staticfiles*'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-      - name: Get timestamp
-        id: timestamp
-        run: echo "time=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+      - name: Install EB CLI
+        run: |
+          python -m pip install --upgrade pip
+          pip install awsebcli
+
+      - name: Configure AWS credentials
+        run: |
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          echo "[default]" > ~/.aws/config
+          echo "region = ${{ secrets.AWS_REGION }}" >> ~/.aws/config
 
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v22
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.EB_APPLICATION_NAME }}
-          environment_name: ${{ secrets.EB_ENVIRONMENT_NAME }}
-          version_label: "open-chat-${{ steps.timestamp.outputs.time }}"
-          region: ${{ secrets.AWS_REGION }}
-          deployment_package: deploy.zip
-          wait_for_deployment: true
-          wait_for_environment_recovery: 300
+        run: |
+          eb init ${{ secrets.EB_APPLICATION_NAME }} \
+            --platform python-3.11 \
+            --region ${{ secrets.AWS_REGION }}
+          eb use ${{ secrets.EB_ENVIRONMENT_NAME }}
+          eb deploy --verbose
 
-      - name: Deployment successful
+      - name: Check deployment status
         if: success()
         run: |
           echo "✅ Deployment successful!"
           echo "Environment: ${{ secrets.EB_ENVIRONMENT_NAME }}"
+          eb status

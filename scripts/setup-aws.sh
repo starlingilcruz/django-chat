@@ -58,7 +58,7 @@ aws rds create-db-instance \
   --db-instance-identifier $RDS_ID \
   --db-instance-class db.t3.micro \
   --engine postgres \
-  --engine-version 16.1 \
+  --engine-version 16.10 \
   --master-username openchat \
   --master-user-password "$RDS_PASSWORD" \
   --allocated-storage 20 \
@@ -130,18 +130,24 @@ DJANGO_SECRET=$(openssl rand -base64 32)
 
 eb create $ENV_NAME \
   --instance-type t3.small \
-  --region $AWS_REGION \
-  --envvars \
-    DJANGO_SECRET_KEY="$DJANGO_SECRET",\
-    DEBUG=False,\
-    ALLOWED_HOSTS=".elasticbeanstalk.com",\
-    POSTGRES_HOST=$RDS_ENDPOINT,\
-    POSTGRES_DB=openchat,\
-    POSTGRES_USER=openchat,\
-    POSTGRES_PASSWORD=$RDS_PASSWORD,\
-    POSTGRES_PORT=5432,\
-    REDIS_URL=redis://$REDIS_ENDPOINT:6379/0,\
-    DJANGO_SETTINGS_MODULE=openchat.settings.prod
+  --region $AWS_REGION
+
+echo ""
+echo "5️⃣  Setting environment variables..."
+echo ""
+
+eb use $ENV_NAME
+eb setenv \
+  DJANGO_SECRET_KEY="$DJANGO_SECRET" \
+  DEBUG=False \
+  ALLOWED_HOSTS=".elasticbeanstalk.com" \
+  POSTGRES_HOST=$RDS_ENDPOINT \
+  POSTGRES_DB=openchat \
+  POSTGRES_USER=openchat \
+  POSTGRES_PASSWORD=$RDS_PASSWORD \
+  POSTGRES_PORT=5432 \
+  REDIS_URL=redis://$REDIS_ENDPOINT:6379/0 \
+  DJANGO_SETTINGS_MODULE=openchat.settings.prod
 
 echo ""
 echo "🎉 Setup Complete!"
