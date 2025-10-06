@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: open-chat tests
+    name: Open Chat Tests
     runs-on: ubuntu-latest
 
     services:

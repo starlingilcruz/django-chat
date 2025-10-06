@@ -20,7 +20,7 @@ urlpatterns = [
     # Health check
     path("healthz", health_check, name="health-check"),
     # Web UI
-    path("", RedirectView.as_view(url="/conversations/", permanent=False)),
+    path("", RedirectView.as_view(url="/login", permanent=False)),
     path("login", LoginTemplateView.as_view(), name="login"),
     path("signup", SignupTemplateView.as_view(), name="signup"),
     path("logout", LogoutTemplateView.as_view(), name="logout"),
