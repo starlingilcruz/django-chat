@@ -5,6 +5,32 @@
 
 Real-time chat application built with Django, Channels, and Redis Streams.
 
+## 🚀 Live Demo
+
+**Live Demo App**: [http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/](http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/)
+
+### Test Accounts
+
+You can use these pre-existing accounts to explore the application:
+
+| Email                  | Password      | Role  |
+|------------------------|---------------|-------|
+| starlin@openchat.com   | Admin@123456  | User  |
+| Nancy@openchat.com     | Admin@123456  | User  |
+| jd@openchat.com        | Admin@123456  | User  |
+| root@openchat.com      | Root@123456   | Admin |
+
+**Admin Portal**: [http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/admin](http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/admin)
+
+### Getting Started
+
+1. **Sign Up**: Create a new account or use one of the test accounts above
+2. **Create Conversation**: Start a new conversation
+3. **Add Participants**: Invite other users to the conversation by entering their email address
+4. **Start Chatting**: Send real-time messages with WebSocket support
+
+![Demo Screenshot](misc/demo.png)
+
 ## Features
 
 - **Real-time messaging** via WebSockets using Django Channels
