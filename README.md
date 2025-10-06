@@ -16,7 +16,7 @@ You can use these pre-existing accounts to explore the application:
 | Email                  | Password      | Role  |
 |------------------------|---------------|-------|
 | starlin@openchat.com   | Admin@123456  | User  |
-| Nancy@openchat.com     | Admin@123456  | User  |
+| nancy@openchat.com     | Admin@123456  | User  |
 | jd@openchat.com        | Admin@123456  | User  |
 | root@openchat.com      | Root@123456   | Admin |
 
