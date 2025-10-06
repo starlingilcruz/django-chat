@@ -20,18 +20,16 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # Application definition
 INSTALLED_APPS = [
-    "daphne",  # Must be first for ASGI support
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party apps
     "rest_framework",
     "rest_framework_simplejwt",
     "channels",
-    # Local apps
     "accounts",
     "conversations",
     "messaging",
@@ -136,7 +134,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 50,
 }
 
-# JWT Settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(
         minutes=int(os.getenv("JWT_ACCESS_TOKEN_LIFETIME_MINUTES", "60"))
