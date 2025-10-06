@@ -7,7 +7,7 @@ Real-time chat application built with Django, Channels, and Redis Streams.
 
 ## 🚀 Live Demo
 
-**Live Demo App**: [http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/](http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/)
+**Live Demo App**: [http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com](http://open-chat-prod.eba-pub2xpmm.us-east-1.elasticbeanstalk.com/login)
 
 ### Test Accounts
 
