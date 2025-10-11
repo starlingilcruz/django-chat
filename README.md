@@ -29,7 +29,7 @@ You can use these pre-existing accounts to explore the application:
 3. **Add Participants**: Invite other users to the conversation by entering their email address
 4. **Start Chatting**: Send real-time messages with WebSocket support
 
-![Demo Screenshot](misc/demo.png)
+<!-- ![Demo Screenshot](misc/demo.png) -->
 
 ## Features
 
